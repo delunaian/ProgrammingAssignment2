@@ -6,16 +6,16 @@
 ## It would set ang get the matrix and inverse, and its output would be used
 ## for the cacheSolve function.
 
-makeCacheMatrix <- function(matrix_data = matrix) {
+makeCacheMatrix <- function(x = matrix()) {
 
     matrix_inverse <- NULL
 
     set <- function(a) {
-        matrix_data <<- a
+        x <<- a
         matrix_inverse <<- NULL
     }
 
-    get <- function() matrix_data
+    get <- function() x
     setInverse <- function(inverse) matrix_inverse <<- inverse
     getInverse <- function() matrix_inverse
     list(set = set, get = get, setInverse = setInverse, getInverse = getInverse)
@@ -24,18 +24,18 @@ makeCacheMatrix <- function(matrix_data = matrix) {
 ## This function evaluates if the inverse was already in the cache, if its in
 ## the cache, the value of the cache will be returned.
 
-cacheSolve <- function(matrix_data, ...) {
+cacheSolve <- function(x, ...) {
 
     ## Return a matrix that is the inverse of 'x'
-    matrix_inverse <- matrix_data$getInverse()
+    matrix_inverse <- x$getInverse()
 
     if(!is.null(matrix_inverse)) {
         message("Getting cached data:")
         return(matrix_inverse)
     }
 
-    data_get <- matrix_data$get()
+    data_get <- x$get()
     matrix_inverse <- solve(data_get)
-    matrix_data$setInverse(matrix_inverse)
+    x$setInverse(matrix_inverse)
     matrix_inverse
 }
